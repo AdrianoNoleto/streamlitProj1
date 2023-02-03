@@ -12,3 +12,8 @@ dadosjson = json.loads(dados[1:-1])
 print(dadosjson["DocNumero"] + " - " + dadosjson["DocSitDescricao"])
 print(dadosjson["Resumo"]["DocNomeDestinatario"])
 print(dadosjson["NFSe"]["NFSeNumero"] + " - " + dadosjson["NFSe"]["NFSeCodVerificacao"])
+
+
+nome = input("Escreva seu nome: ")
+
+print('Seu nome é:', nome)
