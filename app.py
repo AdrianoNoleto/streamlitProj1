@@ -1,5 +1,7 @@
 import requests
 import json
+import easygui
+
 
 api_url = "http://www.integre.net.br/iwa/Api/NFSe/Consultar"
 headers = {'Content-Type': 'application/json', 'Authorization': 'Basic MzdhM2E4NzItMjU5OS00NjA2LThkNzktYjRjMzZkM2VkODZjOmE2YWQ3OTM3LTcxYTMtNDIzNy05MDAwLWMzMDBhMmI3NGIzMg=='}
@@ -14,6 +16,4 @@ print(dadosjson["Resumo"]["DocNomeDestinatario"])
 print(dadosjson["NFSe"]["NFSeNumero"] + " - " + dadosjson["NFSe"]["NFSeCodVerificacao"])
 
 
-nome = input("Escreva seu nome: ")
-
-print('Seu nome é:', nome)
+easygui.msgbox(f'{dadosjson["DocNumero"] + " - " + dadosjson["DocSitDescricao"]}', title="simple gui")
