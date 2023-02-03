@@ -1,21 +1,14 @@
-# Initialize connection.
-# Uses st.experimental_singleton to only run once.
-@st.experimental_singleton
-def init_connection():
-    return mysql.connector.connect(**st.secrets["mysql"])
+import requests
+import json
 
-conn = init_connection()
+api_url = "http://www.integre.net.br/iwa/Api/NFSe/Consultar"
+headers = {'Content-Type': 'application/json', 'Authorization': 'Basic MzdhM2E4NzItMjU5OS00NjA2LThkNzktYjRjMzZkM2VkODZjOmE2YWQ3OTM3LTcxYTMtNDIzNy05MDAwLWMzMDBhMmI3NGIzMg=='}
+body = {"nNF": "84", "serie": "3", "nomChaveAcesso": "VJmLpmCrYlrOw34YuHZtZdBYIO75I0l9"}
+response = requests.post(api_url, json=body, headers=headers)
+dados = json.dumps(response.json())
 
-# Perform query.
-# Uses st.experimental_memo to only rerun when the query changes or after 10 min.
-@st.experimental_memo(ttl=600)
-def run_query(query):
-    with conn.cursor() as cur:
-        cur.execute(query)
-        return cur.fetchall()
+dadosjson = json.loads(dados[1:-1])
 
-rows = run_query("SELECT * from mytable;")
-
-# Print results.
-for row in rows:
-    st.write(f"{row[0]} has a :{row[1]}:")
+print(dadosjson["DocNumero"] + " - " + dadosjson["DocSitDescricao"])
+print(dadosjson["Resumo"]["DocNomeDestinatario"])
+print(dadosjson["NFSe"]["NFSeNumero"] + " - " + dadosjson["NFSe"]["NFSeCodVerificacao"])
